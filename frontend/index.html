@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dandiwal Township | Chak 276 JB Extension Abadi</title>
+  <meta name="description" content="Explore plots, prices and facilities of Dandiwal Township on an interactive map.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ 1. NAVBAR ============ -->
+<header class="nav">
+  <a class="brand" href="#home"><span class="logo">D</span><span>Dandiwal <b>Township</b></span></a>
+  <nav id="menu">
+    <a href="#about">About</a>
+    <a href="#map">Township Map</a>
+    <a href="#facilities">Facilities</a>
+    <a href="#dashboard">Dashboard</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <a class="btn btn-gold nav-cta" href="#map">Explore Plots</a>
+  <button class="burger" id="burger" aria-label="Toggle menu">☰</button>
+</header>
+
+<!-- ============ 2. HERO ============ -->
+<section class="hero" id="home">
+  <div class="hero-in">
+    <span class="pill">Chak No. 276 JB · Extension Abadi</span>
+    <h1>Find Your Plot in a Planned, <em>Digital</em> Township</h1>
+    <p>Explore every street and plot on our interactive map, check availability and prices, and save your favourites to your own dashboard.</p>
+    <div class="cta">
+      <a class="btn btn-gold" href="#map">Open Interactive Map</a>
+      <a class="btn btn-ghost" href="#dashboard">My Dashboard</a>
+    </div>
+    <div class="stats">
+      <div><b data-stat="total">0</b><span>Total Plots</span></div>
+      <div><b data-stat="available">0</b><span>Available Now</span></div>
+      <div><b data-stat="sizes">2</b><span>Plot Sizes</span></div>
+      <div><b data-stat="road">20</b><span>Feet Wide Roads</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. ABOUT ============ -->
+<section class="sec" id="about">
+  <div class="wrap">
+    <h2 class="rv">A Well-Planned Community</h2>
+    <p class="sub rv">Neat blocks, 20-foot roads and standard 5 &amp; 6 Marla plots, right on Dandiwal Road.</p>
+    <div class="grid3">
+      <div class="card rv"><span>🛣️</span><h3>Planned Streets</h3><p>Uniform 20 ft roads connect every block to Dandiwal Road.</p></div>
+      <div class="card rv"><span>📐</span><h3>Standard Plots</h3><p>5 Marla (30×45 ft) and 6 Marla (36×45 ft) plots with clear dimensions.</p></div>
+      <div class="card rv"><span>🗺️</span><h3>Digital Exploration</h3><p>Click any plot to see status, price, size and nearby facilities.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. INTERACTIVE MAP ============ -->
+<section class="sec alt" id="map">
+  <div class="wrap">
+    <h2 class="rv">Interactive Township Map</h2>
+    <p class="sub rv">Filter plots, then click one on the map to see its details.</p>
+
+    <div class="filters">
+      <label>Plot no.<input id="fSearch" type="number" min="1" max="41" placeholder="e.g. 12"></label>
+      <label>Status
+        <select id="fStatus"><option value="all">All</option><option value="available">Available</option><option value="reserved">Reserved</option><option value="sold">Sold</option></select>
+      </label>
+      <label>Size
+        <select id="fSize"><option value="all">All sizes</option><option value="5">5 Marla</option><option value="6">6 Marla</option></select>
+      </label>
+      <label>Block
+        <select id="fBlock"><option value="all">All blocks</option><option>A</option><option>B</option><option>C</option></select>
+      </label>
+      <label>Max price: <b id="fPriceVal"></b><input id="fPrice" type="range" step="0.5"></label>
+      <button class="btn btn-outline" id="fReset">Reset</button>
+      <span class="count" id="fCount"></span>
+    </div>
+
+    <div class="mapgrid">
+      <div class="mapbox">
+        <div class="maptools">
+          <div class="legend">
+            <span><i class="dot available"></i>Available</span>
+            <span><i class="dot reserved"></i>Reserved</span>
+            <span><i class="dot sold"></i>Sold</span>
+          </div>
+          <div class="zoom"><button data-z="-1" aria-label="Zoom out">−</button><button data-z="0" aria-label="Reset zoom">⟲</button><button data-z="1" aria-label="Zoom in">+</button></div>
+        </div>
+        <div class="mapscroll"><svg id="mapSvg" viewBox="0 0 1000 560" role="img" aria-label="Township plot map"></svg></div>
+      </div>
+      <aside class="panel" id="panel">
+        <div class="empty"><span>👆</span><h3>Select a plot</h3><p>Click any plot on the map to view its details here.</p></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. FACILITIES ============ -->
+<section class="sec" id="facilities">
+  <div class="wrap">
+    <h2 class="rv">Facilities &amp; Amenities</h2>
+    <p class="sub rv">Everything you need within walking distance.</p>
+    <div class="grid3" id="fGrid"></div>
+  </div>
+</section>
+
+<!-- ============ 6. USER DASHBOARD ============ -->
+<section class="sec alt" id="dashboard">
+  <div class="wrap">
+    <h2 class="rv">My Dashboard</h2>
+    <p class="sub rv">Your saved plots and visit requests, stored in this browser.</p>
+    <div class="dash">
+      <aside class="dside">
+        <div class="avatar" id="dAvatar">G</div>
+        <h4 id="dName">Guest User</h4><small>Prospective buyer</small>
+        <button class="tab active" data-tab="overview">📊 Overview</button>
+        <button class="tab" data-tab="saved">⭐ Saved Plots</button>
+        <button class="tab" data-tab="inquiries">📩 Visit Requests</button>
+        <button class="tab" data-tab="profile">👤 Profile</button>
+      </aside>
+      <div class="dmain">
+        <div class="dpane active" id="pane-overview">
+          <div class="cards" id="dCards"></div>
+          <h4>Latest activity</h4><ul class="list" id="dActivity"></ul>
+        </div>
+        <div class="dpane" id="pane-saved"><h4>Saved plots</h4><div id="dSaved"></div></div>
+        <div class="dpane" id="pane-inquiries"><h4>Visit requests</h4><div id="dInq"></div></div>
+        <div class="dpane" id="pane-profile">
+          <h4>Profile</h4>
+          <form id="pForm" class="form">
+            <label>Full name<input id="pName" required></label>
+            <label>Phone<input id="pPhone" type="tel" placeholder="03xx-xxxxxxx"></label>
+            <button class="btn btn-green">Save profile</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7. CONTACT / CTA ============ -->
+<section class="sec cta-sec" id="contact">
+  <div class="wrap two">
+    <div>
+      <h2>Ready to Visit the Site?</h2>
+      <p>Send us your details and our sales team will arrange a site visit.</p>
+      <p class="ci">📞 +92 300 0000000<br>📍 Chak No. 276 JB, Dandiwal Road</p>
+    </div>
+    <form class="form white" id="cForm">
+      <input placeholder="Your name" required>
+      <input type="tel" placeholder="Phone number" required>
+      <textarea rows="3" placeholder="Message (e.g. interested in a 5 Marla plot)"></textarea>
+      <button class="btn btn-gold">Send Inquiry</button>
+    </form>
+  </div>
+</section>
+
+<!-- ============ 8. FOOTER ============ -->
+<footer class="foot">
+  <span>© 2026 Dandiwal Township · Chak No. 276 JB Extension Abadi</span>
+  <span>Prices and availability shown are sample data.</span>
+</footer>
+
+<div class="toast" id="toast"></div>
+<script src="script.js"></script>
+</body>
+</html>
